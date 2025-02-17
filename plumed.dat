@@ -1,0 +1,30 @@
+RESTART
+
+FIT_TO_TEMPLATE REFERENCE=step5_charmm2gmx-modified.pdb
+a0: FIXEDATOM AT=0,0,0
+az: FIXEDATOM AT=0,0,1
+phi: TORSION ATOMS=70,143,a0,az
+theta: TORSION ATOMS=2549,2420,a0,az
+
+##ZANGLES ATOMS=70,143 LABEL=phi
+##ZANGLES ATOMS=2549,2420 LABEL=theta
+# Activate metadynamics in phi and psi
+# depositing a Gaussian every 500 time steps,
+# with height equal to 1.0 kJoule/mol,
+# and width 0.35 rad for both CVs. 
+
+METAD ...
+LABEL=metad
+ARG=phi,theta
+PACE=500
+HEIGHT=1.0
+SIGMA=0.35,0.35
+FILE=HILLS3
+BIASFACTOR=10.0
+TEMP=310.0
+GRID_MIN=-pi,-pi
+GRID_MAX=pi,pi
+GRID_SPACING=0.1,0.1
+... METAD
+
+PRINT STRIDE=500 ARG=phi,theta,metad.bias FILE=COLVAR3
