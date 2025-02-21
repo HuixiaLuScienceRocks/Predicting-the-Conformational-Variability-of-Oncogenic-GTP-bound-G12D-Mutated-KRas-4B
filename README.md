@@ -6,6 +6,8 @@ I am more than happy to learn that if you find them useful.
 
 
 command line: 
-''
+```
 gmx mdrun -deffnm 1500ns-metadynamics -v -plumed plumed.dat
-''
+```
+
+
